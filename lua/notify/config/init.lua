@@ -25,7 +25,7 @@ local default_config = {
   max_height = nil,
   stages = BUILTIN_STAGES.FADE_IN_SLIDE_OUT,
   render = BUILTIN_RENDERERS.DEFAULT,
-  background_colour = "NotifyBackground",
+  background_color = "NotifyBackground",
   on_open = nil,
   on_close = nil,
   minimum_width = 50,
@@ -51,7 +51,7 @@ local default_config = {
 ---@field max_width number|function|nil Max number of columns for messages
 ---@field max_height number|function|nil Max number of lines for a message
 ---@field stages string|function[]|nil Animation stages
----@field background_colour string? For stages that change opacity this is treated as the highlight behind the window. Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
+---@field background_color string? For stages that change opacity this is treated as the highlight behind the window. Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
 ---@field icons table? Icons for each level (upper case names)
 ---@field time_formats table? Time formats for different kind of notifications
 ---@field on_open function? Function called when a new window is opened, use for changing win settings/config
@@ -64,27 +64,27 @@ local default_config = {
 
 local opacity_warned = false
 
-local function validate_highlight(colour_or_group, needs_opacity)
-  if type(colour_or_group) == "function" then
-    return colour_or_group
+local function validate_highlight(color_or_group, needs_opacity)
+  if type(color_or_group) == "function" then
+    return color_or_group
   end
-  if colour_or_group:sub(1, 1) == "#" then
+  if color_or_group:sub(1, 1) == "#" then
     return function()
-      return colour_or_group
+      return color_or_group
     end
   end
   return function()
-    local group = vim.api.nvim_get_hl(0, { name = colour_or_group, create = false, link = false })
+    local group = vim.api.nvim_get_hl(0, { name = color_or_group, create = false, link = false })
     if not group or not group.bg then
       if needs_opacity and not opacity_warned then
         opacity_warned = true
         vim.schedule(function()
-          vim.notify("Highlight group '" .. colour_or_group .. [[' has no background highlight
-Please provide an RGB hex value or highlight group with a background value for 'background_colour' option.
-This is the colour that will be used for 100% transparency.
+          vim.notify("Highlight group '" .. color_or_group .. [[' has no background highlight
+Please provide an RGB hex value or highlight group with a background value for 'background_color' option.
+This is the color that will be used for 100% transparency.
 ```lua
 require("notify").setup({
-  background_colour = "#000000",
+  background_color = "#000000",
 })
 ```
 Defaulting to #000000]], "warn", {
@@ -111,8 +111,17 @@ function Config._format_default()
   return lines
 end
 
-function Config.setup(custom_config)
-  local user_config = vim.tbl_deep_extend("keep", custom_config or {}, default_config)
+function Config.setup(user_config)
+  if user_config['background_colour'] then
+    user_config['background_color'] = user_config['background_color'] or user_config['background_colour']
+    user_config['background_colour'] = nil
+    vim.schedule(function()
+      vim.notify('background_colour - id deprecated, use background_color instead', 'warn', {title='nvim-notify'})
+    end)
+    
+  end
+
+  local user_config = vim.tbl_deep_extend("keep", user_config or {}, default_config)
   local config = {}
 
   function config.merged()
@@ -131,8 +140,8 @@ function Config.setup(custom_config)
     return user_config.fps
   end
 
-  function config.background_colour()
-    return tonumber(user_config.background_colour():gsub("#", "0x"), 16)
+  function config.background_color()
+    return tonumber(user_config.background_color():gsub("#", "0x"), 16)
   end
 
   function config.time_formats()
@@ -201,7 +210,7 @@ function Config.setup(custom_config)
     end)
   end
 
-  user_config.background_colour = validate_highlight(user_config.background_colour, needs_opacity)
+  user_config.background_color = validate_highlight(user_config.background_color, needs_opacity)
 
   return config
 end

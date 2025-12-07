@@ -94,19 +94,19 @@ end
 M.FIFOQueue = require("notify.util.queue")
 
 function M.rgb_to_numbers(s)
-  local colours = {}
+  local colors = {}
   for a in string.gmatch(s, "[A-Fa-f0-9][A-Fa-f0-9]") do
-    colours[#colours + 1] = tonumber(a, 16)
+    colors[#colors + 1] = tonumber(a, 16)
   end
-  return colours
+  return colors
 end
 
-function M.numbers_to_rgb(colours)
-  local colour = "#"
-  for _, num in pairs(colours) do
-    colour = colour .. string.format("%X", num)
+function M.numbers_to_rgb(colors)
+  local color = "#"
+  for _, num in pairs(colors) do
+    color = color .. string.format("%X", num)
   end
-  return colour
+  return color
 end
 
 function M.highlight(name, fields)
