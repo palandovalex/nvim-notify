@@ -11,7 +11,7 @@ describe("checking public interface", function()
   assert:add_formatter(vim.inspect)
 
   before_each(function()
-    notify.setup({ background_colour = "#000000" })
+    notify.setup({ background_color = "#000000" })
     notify.dismiss({ pending = true, silent = true })
   end)
 
@@ -36,7 +36,7 @@ describe("checking public interface", function()
       a.it("uses custom render in config", function()
         local called = false
         notify.setup({
-          background_colour = "#000000",
+          background_color = "#000000",
           render = function()
             called = true
           end,
@@ -48,7 +48,7 @@ describe("checking public interface", function()
       a.it("validates max width and prefix length", function()
         local terminal_width = vim.o.columns
         notify.setup({
-          background_colour = "#000000",
+          background_color = "#000000",
           max_width = function()
             return math.min(terminal_width, 50)
           end,
@@ -112,7 +112,7 @@ describe("checking public interface", function()
 
   a.it("uses the configured minimum width", function()
     notify.setup({
-      background_colour = "#000000",
+      background_color = "#000000",
       minimum_width = 20,
     })
     local win = notify.async("test").events.open()
@@ -121,7 +121,7 @@ describe("checking public interface", function()
 
   a.it("uses the configured max width", function()
     notify.setup({
-      background_colour = "#000000",
+      background_color = "#000000",
       max_width = function()
         return 3
       end,
@@ -132,7 +132,7 @@ describe("checking public interface", function()
 
   a.it("uses the configured max height", function()
     local instance = notify.instance({
-      background_colour = "#000000",
+      background_color = "#000000",
       max_height = function()
         return 3
       end,
@@ -143,7 +143,7 @@ describe("checking public interface", function()
 
   a.it("renders title as longest line", function()
     local instance = notify.instance({
-      background_colour = "#000000",
+      background_color = "#000000",
       minimum_width = 10,
     }, false)
     local win = instance.async("test", nil, { title = { string.rep("a", 16), "" } }).events.open()
@@ -170,7 +170,7 @@ describe("checking public interface", function()
   end)
   a.it("refreshes timeout on replace", function()
     -- Don't want to spend time animating
-    notify.setup({ background_colour = "#000000", stages = "static" })
+    notify.setup({ background_color = "#000000", stages = "static" })
 
     local notif = notify.async("test", "error", { timeout = 500 })
     local win = notif.events.open()
@@ -196,7 +196,7 @@ describe("checking public interface", function()
       describe("notification width", function()
         a.it("handles multibyte characters correctly", function()
           local instance = notify.instance({
-            background_colour = "#000000",
+            background_color = "#000000",
             minimum_width = 1,
             render = "minimal",
           }, false)
@@ -206,7 +206,7 @@ describe("checking public interface", function()
 
         a.it("handles combining character sequences correctly", function()
           local instance = notify.instance({
-            background_colour = "#000000",
+            background_color = "#000000",
             minimum_width = 1,
             render = "minimal",
           }, false)
@@ -223,7 +223,7 @@ describe("checking public interface", function()
 
         a.it("respects East Asian Width Class", function()
           local instance = notify.instance({
-            background_colour = "#000000",
+            background_color = "#000000",
             minimum_width = 1,
             render = "minimal",
           }, false)

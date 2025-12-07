@@ -20,7 +20,7 @@ Parameters~
 Default values:
 >lua
   {
-    background_colour = "NotifyBackground",
+    background_color = "NotifyBackground",
     fps = 30,
     icons = {
       DEBUG = "",
@@ -189,7 +189,7 @@ Fields~
 {max_width} `(number|function)` Max number of columns for messages
 {max_height} `(number|function)` Max number of lines for a message
 {stages} `(string|function[])` Animation stages
-{background_colour} `(string)` For stages that change opacity this is treated as the highlight behind the window. Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
+{background_color} `(string)` For stages that change opacity this is treated as the highlight behind the window. Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
 {icons} `(table)` Icons for each level (upper case names)
 {time_formats} `(table)` Time formats for different kind of notifications
 {on_open} `(function)` Function called when a new window is opened, use for changing win settings/config
