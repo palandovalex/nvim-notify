@@ -117,7 +117,7 @@ function Config.setup(custom_config)
     user_config['background_color'] = user_config['background_color'] or user_config['background_colour']
     user_config['background_colour'] = nil
     vim.schedule(function()
-      vim.notify('background_colour - id deprecated, use background_color instead', 'warn', {title='nvim-notify'})
+      vim.notify('background_colour - is deprecated, use background_color instead', 'warn', {title='nvim-notify'})
     end)
   end
 
