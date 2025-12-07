@@ -140,7 +140,7 @@ function NotifyBufHighlights:set_opacity(alpha)
     self:_redefine_treesitter()
   end
   self.opacity = alpha
-  local background = self._config.background_colour()
+  local background = self._config.background_color()
   local updated = false
   for group, fields in pairs(self.groups) do
     local fg = fields.fg

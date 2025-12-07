@@ -111,17 +111,17 @@ function Config._format_default()
   return lines
 end
 
-function Config.setup(user_config)
+function Config.setup(custom_config)
+  local user_config = vim.tbl_deep_extend("keep", custom_config or {}, default_config)
   if user_config['background_colour'] then
     user_config['background_color'] = user_config['background_color'] or user_config['background_colour']
     user_config['background_colour'] = nil
     vim.schedule(function()
       vim.notify('background_colour - id deprecated, use background_color instead', 'warn', {title='nvim-notify'})
     end)
-    
   end
 
-  local user_config = vim.tbl_deep_extend("keep", user_config or {}, default_config)
+
   local config = {}
 
   function config.merged()
